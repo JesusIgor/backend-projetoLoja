@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Carrinho {
+  id         Int       @id(map: "PK__Carrinho__3213E83FBE5A61AF") @default(autoincrement())
+  produto_id Int?
+  quantidade Int?
+  pedido_id  Int?
+  Produtos   Produtos? @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Carrinho__produt__4BAC3F29")
+  Pedidos    Pedidos?  @relation(fields: [pedido_id], references: [id], onUpdate: NoAction, map: "FK_Carrinho_Pedidos")
+}
+
+model Categorias {
+  id               Int                @id(map: "PK__Categori__3213E83F17255A38") @default(autoincrement())
+  categoria_nome   String?            @db.VarChar(100)
+  ProdutoCategoria ProdutoCategoria[]
+}
+
+model Pedidos {
+  id         Int        @id(map: "PK__Pedidos__3213E83FF1FF8DA5") @default(autoincrement())
+  usuario_id Int?
+  total      Decimal?   @db.Decimal(10, 2)
+  data       DateTime?  @default(now(), map: "DF__Pedidos__data__571DF1D5") @db.DateTime
+  Carrinho   Carrinho[]
+  Usuarios   Usuarios?  @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Pedidos__usuario__5812160E")
+}
+
+model ProdutoCategoria {
+  produto_id   Int
+  categoria_id Int
+  Categorias   Categorias @relation(fields: [categoria_id], references: [id], onUpdate: NoAction, map: "FK__ProdutoCa__categ__5441852A")
+  Produtos     Produtos   @relation(fields: [produto_id], references: [id], onUpdate: NoAction, map: "FK__ProdutoCa__produ__534D60F1")
+
+  @@id([produto_id, categoria_id], map: "PK__ProdutoC__89F0187CE5D857B9")
+}
+
+model Produtos {
+  id               Int                @id(map: "PK__Produtos__3213E83F678A9F3C")
+  name             String?            @db.VarChar(255)
+  description      String?            @db.Text
+  price            Decimal?           @db.Decimal(10, 2)
+  marca            String?            @db.VarChar(255)
+  imageUrl         String?            @db.Text
+  category         String?            @db.VarChar(100)
+  Carrinho         Carrinho[]
+  ProdutoCategoria ProdutoCategoria[]
+}
+
+model Usuarios {
+  id        Int       @id(map: "PK__Usuarios__3213E83F11F58D1B") @default(autoincrement())
+  nome      String?   @db.VarChar(255)
+  sobrenome String?   @db.VarChar(255)
+  usuario   String?   @unique(map: "UQ__Usuarios__9AFF8FC6515C4D9D") @db.VarChar(100)
+  senha     String?   @db.VarChar(255)
+  Pedidos   Pedidos[]
+}
