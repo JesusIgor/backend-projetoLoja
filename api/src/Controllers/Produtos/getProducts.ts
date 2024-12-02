@@ -15,4 +15,3 @@ export const getProdutos = async (req: Request, res: Response) => {
   }
 };
 
-// Função para pegar um produto específico pelo ID

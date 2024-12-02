@@ -4,7 +4,6 @@ import { PrismaClient, Carrinho } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Create a new item in the cart
 export async function createCarrinho(req: Request, res: Response): Promise<void> {
   const { produto_id, quantidade, pedido_id } = req.body;
   try {
@@ -17,7 +16,6 @@ export async function createCarrinho(req: Request, res: Response): Promise<void>
   }
 }
 
-// Get all cart items
 export async function getAllCarrinho(req: Request, res: Response): Promise<void> {
   try {
     const items = await prisma.carrinho.findMany();
@@ -27,7 +25,6 @@ export async function getAllCarrinho(req: Request, res: Response): Promise<void>
   }
 }
 
-// Get a cart item by ID
 export async function getCarrinhoById(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   try {
@@ -44,7 +41,6 @@ export async function getCarrinhoById(req: Request, res: Response): Promise<void
   }
 }
 
-// Update cart item
 export async function updateCarrinho(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   const { produto_id, quantidade, pedido_id } = req.body;
@@ -59,7 +55,6 @@ export async function updateCarrinho(req: Request, res: Response): Promise<void>
   }
 }
 
-// Delete cart item
 export async function deleteCarrinho(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   try {

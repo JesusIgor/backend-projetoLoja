@@ -4,7 +4,6 @@ import { PrismaClient, Usuarios } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Create a new user
 export async function createUser(req: Request, res: Response): Promise<void> {
   const { nome, sobrenome, usuario, senha } = req.body;
   try {
@@ -17,7 +16,6 @@ export async function createUser(req: Request, res: Response): Promise<void> {
   }
 }
 
-// Get all users
 export async function getAllUsers(req: Request, res: Response): Promise<void> {
   try {
     const users = await prisma.usuarios.findMany();
@@ -27,7 +25,6 @@ export async function getAllUsers(req: Request, res: Response): Promise<void> {
   }
 }
 
-// Get user by ID
 export async function getUserById(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   try {
@@ -44,7 +41,6 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
   }
 }
 
-// Update a user
 export async function updateUser(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   const { nome, sobrenome, usuario, senha } = req.body;
@@ -59,7 +55,6 @@ export async function updateUser(req: Request, res: Response): Promise<void> {
   }
 }
 
-// Delete a user
 export async function deleteUser(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   try {
