@@ -4,7 +4,6 @@ import { PrismaClient, Pedidos } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Create a new order
 export async function createPedido(req: Request, res: Response): Promise<void> {
   const { usuario_id, total, data } = req.body;
   try {
@@ -17,7 +16,6 @@ export async function createPedido(req: Request, res: Response): Promise<void> {
   }
 }
 
-// Get all orders
 export async function getAllPedidos(req: Request, res: Response): Promise<void> {
   try {
     const pedidos = await prisma.pedidos.findMany();
@@ -27,7 +25,6 @@ export async function getAllPedidos(req: Request, res: Response): Promise<void> 
   }
 }
 
-// Get order by ID
 export async function getPedidoById(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   try {
@@ -44,7 +41,6 @@ export async function getPedidoById(req: Request, res: Response): Promise<void> 
   }
 }
 
-// Update order
 export async function updatePedido(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   const { usuario_id, total, data } = req.body;
@@ -59,7 +55,6 @@ export async function updatePedido(req: Request, res: Response): Promise<void> {
   }
 }
 
-// Delete order
 export async function deletePedido(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   try {
